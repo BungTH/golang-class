@@ -32,7 +32,13 @@ var (
 
 func main() {
 
-	err := godotenv.Load(".env")
+	_, err := os.Create("/tmp/healthy")
+	if err != nil {
+		log.Fatal("Can not create healthy file")
+	}
+	defer os.Remove("/tmp/healthy")
+
+	err = godotenv.Load(".env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
