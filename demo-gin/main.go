@@ -15,20 +15,56 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+
+	_ "github.com/bungkapth/demo-gin/docs"
 	"github.com/bungkapth/demo-gin/auth"
 	"github.com/bungkapth/demo-gin/user"
 )
-
-// date "+%Y-%m-%dT%H:%M:%S%Z:00"
-// go build \
-// -ldflags "-X main.buildcommit=`git rev-parse --short HEAD` \
-// -X main.buildtime=`date "+%Y-%m-%dT%H:%M:%S%Z:00"`" \
-// -o maim
 
 var (
 	buildcommit = "dev"
 	buildtime = time.Now().String()
 )
+
+// @title           Swagger Example API
+// @version         1.0
+// @description     This is a sample server celler server.
+
+// Health godoc
+// @Summary      Health Check
+// @Description  Health Check
+// @Tags         Health
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  map[string]interface{}
+// @Router       /health [get]
+func Health() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "healthy",
+		})
+	}
+}
+
+// Version godoc
+// @Summary      Version Check
+// @Description  Version Check
+// @Tags         Version
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  map[string]interface{}
+// @Router       /version [get]
+func Version() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"buildcommit": buildcommit,
+			"buildtime": buildtime,
+			"version": "1.0.0",
+		})
+	}
+}
 
 func main() {
 
@@ -52,20 +88,9 @@ func main() {
 
 	r := gin.Default()
 
-	r.GET("/ping", func(c *gin.Context) {
-		// c.String(http.StatusOK, "pong")
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong!",
-		})
-	})
+	r.GET("/health", Health())
 
-	r.GET("/version", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"buildcommit": buildcommit,
-			"buildtime": buildtime,
-			"version": "1.0.0",
-		})
-	})
+	r.GET("/version", Version())
 
 	// Usage: http://localhost:8080/greeting?name=John
 	r.GET("/greeting", func(c *gin.Context) {
@@ -86,6 +111,8 @@ func main() {
 	db.AutoMigrate(
 		&user.User{},
 	)
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	r.GET("/token", auth.GetToken(os.Getenv("WIFI_SECRET")))
 
