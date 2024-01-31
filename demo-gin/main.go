@@ -19,6 +19,12 @@ import (
 	"github.com/bungkapth/demo-gin/user"
 )
 
+// date "+%Y-%m-%dT%H:%M:%S%Z:00"
+// go build \
+// -ldflags "-X main.buildcommit=`git rev-parse --short HEAD` \
+// -X main.buildtime=`date "+%Y-%m-%dT%H:%M:%S%Z:00"`" \
+// -o maim
+
 var (
 	buildcommit = "dev"
 	buildtime = time.Now().String()
