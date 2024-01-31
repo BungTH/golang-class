@@ -30,4 +30,10 @@ go run main.go
 ./main
 ```
 
-Please open each sub folder seperately to run the program.
+# How to build Docker Image
+
+```sh
+docker build -t api .
+```
+
+### Please open each sub folder seperately to run the program.
