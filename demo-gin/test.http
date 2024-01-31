@@ -13,7 +13,7 @@ Content-Type: application/json
 ###
 
 GET http://localhost:8080/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiT0REUyIsImV4cCI6MTcwNjYxMTg0Nn0.FviS4aNy--RhRG-Bkab66QkS60-aw6Wbv1GMMZPgRvw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJOYW1lIjoiT0REUyIsImV4cCI6MTcwNjY3NDk2NX0.ZJZUxxVYlJ1xZiaZ55w5LHcao6WskCsg61jfBzX6VT0
 
 ###
 
