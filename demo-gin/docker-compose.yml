@@ -11,3 +11,9 @@ services:
       POSTGRES_DB: demo
     volumes:
       - ./volumes/postgres/data:/var/lib/postgresql/data
+  api:
+    image: api
+    ports:
+      - 8000:8000
+    volumes:
+      - ./.env:/.env
